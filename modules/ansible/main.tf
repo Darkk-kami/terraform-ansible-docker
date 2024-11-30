@@ -29,7 +29,7 @@ resource "null_resource" "copy_ansible" {
 resource "null_resource" "copy_deps" {
   provisioner "file" {
     source      = "${path.module}/../../dependencies" 
-    destination = "/home/ubuntu/ansible/depedencies/"
+    destination = "/home/ubuntu/ansible/dependencies/"
     connection {
       type        = "ssh"
       user        = "ubuntu"
@@ -37,7 +37,7 @@ resource "null_resource" "copy_deps" {
       host        = var.ansible_controller.public_ip
     }
   }
-  depends_on = [ var.ansible_controller ]
+  depends_on = [ var.ansible_controller , null_resource.copy_ansible]
 }
 
 # export ANSIBLE_HOST_KEY_CHECKING=False
