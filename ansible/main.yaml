@@ -1,0 +1,33 @@
+---
+
+- name: Setup Environemnt
+  hosts: all
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/ansible.pem
+  become: true
+
+  pre_tasks:
+    - name: Update the package manager cache
+      ansible.builtin.apt:
+        update_cache: true
+        cache_valid_time: 3600
+
+  tasks:
+    - name: Install Docker (using a role)
+      ansible.builtin.include_role:
+        name: bsmeding.docker
+
+    - name: Ensure /app directory exists
+      ansible.builtin.file:
+        path: /app
+        state: directory
+        mode: '0755'
+        owner: root
+        group: root
+    - name: Copy the entire directory to /app
+      ansible.builtin.copy:
+        src: /home/ubuntu/ansible/dependencies
+        dest: /app/
+        owner: root
+        group: root
+        mode: '0755'
