@@ -8,10 +8,10 @@ A key feature is automatic DNS management: during each deployment, the infrastru
 ## Getting Started
 The following prequisites must be met
 
-Terraform installed
+1. Terraform installed
 
 
-AWS CLI with necessary permissions for provisioning resources:
+2. AWS CLI with necessary permissions for provisioning resources:
 * EC2
 
 * Networking (VPC, Subnets)
@@ -20,7 +20,7 @@ AWS CLI with necessary permissions for provisioning resources:
 
 * IAM: `iam:PassRole`
 
-A **Route53 Hosted zone**
+3. A **Route53 Hosted zone**
  * A domain name for setting up application routing and access.
 
 ***
