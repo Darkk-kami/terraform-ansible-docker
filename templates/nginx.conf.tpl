@@ -32,12 +32,6 @@ server {
         proxy_set_header X-Forwarded-Proto $scheme;
     }
 
-    location /prometheus {
-        proxy_pass http://prometheus:9090;
-        proxy_set_header Host $host;
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-    }
 
     location /grafana/ {
         proxy_pass http://grafana:3000;
@@ -74,7 +68,7 @@ server {
 # Redirect HTTP to HTTPS for subdomains
 server {
     listen 80;
-    server_name proxy.${domain} db.${domain};
+    server_name proxy.${domain} db.${domain} prometheus.${domain};
     return 301 https://$host$request_uri;
 }
 
@@ -105,6 +99,23 @@ server {
 
     location / {
         proxy_pass http://proxy:81;  
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+# Prometheus subdomain (HTTPS)
+server {
+    listen 443 ssl;
+    server_name prometheus.${domain};
+
+    ssl_certificate /etc/letsencrypt/live/${domain}/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/${domain}/privkey.pem;
+
+    location / {
+        proxy_pass http://prometheus:9090;
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

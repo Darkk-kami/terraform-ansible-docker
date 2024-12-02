@@ -19,3 +19,16 @@ variable "instance_count" {
 variable "ansible_controller-sg" {
   
 }
+
+variable "instance_profile" {
+  default = ""
+}
+
+variable "instance_type" {
+}
+
+variable "private_key" {
+}
+
+variable "tls_key" {
+}

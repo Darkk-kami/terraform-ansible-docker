@@ -4,10 +4,14 @@ module "network" {
   public_subnets_no = 3
   desired_azs = 100
   map_public_ip = true
-  inbound_ports = [ 22, 80, 443 ]
+  inbound_ports = [ 80, 443 ]
   tags = {
     env = "dev"
   }
+}
+
+module "sshkey" {
+  source = "../modules/sshkey"
 }
 
 module "compute" {
@@ -16,6 +20,11 @@ module "compute" {
   security_group_id = module.network.security_group_id
   subnet_id = module.network.subnet_ids
   ansible_controller-sg = module.network.ansible_sg_id
+  instance_profile = module.route53.ec2_instance_profile
+  instance_type = "t2.medium"
+  private_key = module.sshkey.private_key
+  tls_key = module.sshkey.tls_key
+
 }
 
 
@@ -23,10 +32,23 @@ module "ansible" {
   source = "../modules/ansible"
   private_ips = module.compute.app_instance_private_ips
   ansible_controller = module.compute.ansible_controller
-  depends_on = [ module.domain, module.compute ]
+  private_key = module.sshkey
+  tls_key = module.sshkey.tls_key
+  depends_on = [ module.templates, module.compute, module.route53 ]
+  domain = var.domain
+  email = var.email
 }
 
-module "domain" {
-  source = "../modules/domain"
-  domain = "example.com"
+module "templates" {
+  source = "../modules/template"
+  domain = var.domain
 }
+
+module "route53" {
+  source = "../modules/route53"
+  domain = var.domain
+  app_instance = module.compute.app_instance
+}
+
+
+
