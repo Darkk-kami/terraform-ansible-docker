@@ -17,7 +17,7 @@ resource "aws_iam_role" "ec2_route53_role" {
 
 resource "aws_iam_policy" "route53_policy" {
   name        = "route53-policy"
-  description = "Policy for EC2 to interact with Route 53 and API Gateway"
+  description = "Policy for EC2 to interact with Route 53"
   policy      = jsonencode({
     "Version": "2012-10-17",
     "Statement": [
