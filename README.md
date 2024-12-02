@@ -10,21 +10,15 @@ The following prequisites must be met
 
 1. Terraform installed
 
-
 2. AWS CLI with necessary permissions for provisioning resources:
-* EC2
-
-* Networking (VPC, Subnets)
-
-* DNS (Route 53)
-
-* IAM: `iam:PassRole`
+  * EC2
+  * Networking (VPC, Subnets)
+  * DNS (Route 53)
+  * IAM: `iam:PassRole`
 
 3. A **Route53 Hosted zone**
- * A domain name for setting up application routing and access.
-
+   * A domain name for setting up application routing and access.
 ***
-
 Clone the repository:
 ```
 git clone https://github.com/Darkk-kami/terraform-ansible-docker.git
