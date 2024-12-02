@@ -34,3 +34,4 @@ terraform apply
 ## Further Docmentation
 
 For more information on the setup, troubleshooting, and architecture details, please visit the [wiki](https://github.com/Darkk-kami/terraform-ansible-docker/wiki)
+or skip to the [Deployment](https://github.com/Darkk-kami/terraform-ansible-docker/wiki/Deployment-Process) Page for a straightforward, easy-to-understand steps of the deployment process.
