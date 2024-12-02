@@ -34,7 +34,7 @@ module "ansible" {
   ansible_controller = module.compute.ansible_controller
   private_key = module.sshkey
   tls_key = module.sshkey.tls_key
-  depends_on = [ module.templates, module.compute, module.route53 ]
+  depends_on = [ module.templates, module.compute]
   domain = var.domain
   email = var.email
 }
@@ -48,6 +48,15 @@ module "route53" {
   source = "../modules/route53"
   domain = var.domain
   app_instance = module.compute.app_instance
+}
+
+module "trigger_playbook" {
+  source = "../modules/playbook"
+  domain = var.domain
+  email = var.email
+  tls_key = module.sshkey.tls_key
+  ansible_controller = module.compute.ansible_controller
+  depends_on = [ module.ansible, module.route53 ]
 }
 
 
