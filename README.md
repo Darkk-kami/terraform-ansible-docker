@@ -31,6 +31,15 @@ terraform init
 terraform apply
 ```
 
+## Applications Routes
+* Frontend: `/`
+* doc: `/docs` `/redoc`
+* Grafana: `/grafana`
+* Proxy Manager: `proxy.domain`
+* Prometheus: `prometheus.domain`
+* Adminer: `db.domain`
+
+
 ## Further Docmentation
 
 For more information on the setup, troubleshooting, and architecture details, please visit the [wiki](https://github.com/Darkk-kami/terraform-ansible-docker/wiki)
