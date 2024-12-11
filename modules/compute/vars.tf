@@ -1,3 +1,14 @@
+variable "environment" {
+  description = "The deployment environment (must be 'dev' or 'prod', in lowercase)"
+  type        = string
+
+  validation {
+    condition     = lower(var.environment) == var.environment && contains(["dev", "prod"], var.environment)
+    error_message = "The environment must be either 'dev' or 'prod' and must be in lowercase."
+  }
+}
+
+
 variable "distro_version" {
   description = "The version of the Linux distribution"
   type        = string
